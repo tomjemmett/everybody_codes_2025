@@ -4,11 +4,10 @@ import SpecHelper
 
 spec :: Spec
 spec = describe "Day 1" $ do
-  pure ()
-  -- it "Sample" $ do
-  --   s <- day01 "sample"
-  --   s `shouldBe` ()
+  it "Sample" $ do
+    s <- day01 "sample"
+    s `shouldBe` ("Fyrryn", "Elarzris", "Drakzyph")
 
-  -- it "Actual" $ do
-  --   a <- day01 "actual"
-  --   a `shouldBe` ()
+  it "Actual" $ do
+    a <- day01 "actual"
+    a `shouldBe` ("Narcoryx", "Dorxith", "Uryth")
