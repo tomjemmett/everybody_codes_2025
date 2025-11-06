@@ -1,0 +1,10 @@
+cradle:
+  cabal:
+    - path: "src"
+      component: "lib:ec2025"
+
+    - path: "app/Main.hs"
+      component: "ec2025:exe:ec2025"
+
+    - path: "test"
+      component: "ec2025:test:spec"
