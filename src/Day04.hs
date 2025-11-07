@@ -2,9 +2,8 @@ module Day04 where
 
 import Common
 import ECSolution (Solution, getInput, makeSolution, runDay)
-
-import Text.Parsec qualified as P
 import Text.Parsec ((<|>))
+import Text.Parsec qualified as P
 
 day04 :: String -> IO (Int, Int, Int)
 day04 = getInput 4 part1 part2 part3
