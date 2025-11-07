@@ -4,4 +4,13 @@ import Common
 import ECSolution (Solution, getInput, makeSolution, runDay)
 
 day09 :: String -> IO (Int, Int, Int)
-day09 = undefined
+day09 = getInput 9 part1 part2 part3
+
+part1 :: String -> Int
+part1 = const 0
+
+part2 :: String -> Int
+part2 = const 0
+
+part3 :: String -> Int
+part3 = const 0
