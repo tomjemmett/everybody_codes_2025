@@ -1,9 +1,8 @@
 module Day03 where
 
 import Common
+import Data.List (group, nub, sort)
 import ECSolution (Solution, getInput, makeSolution, runDay)
-
-import Data.List (sort, nub, group)
 
 day03 :: String -> IO (Int, Int, Int)
 day03 = getInput 3 part1 part2 part3
@@ -18,8 +17,4 @@ part3 :: String -> Int
 part3 = go . sort . commaSeparatedInts
   where
     go [] = 0
-    go xs = 1 + go xs'
-      where
-        xs' = concatMap tail $ group xs
-
-
+    go xs = 1 + go (concatMap tail $ group xs)
