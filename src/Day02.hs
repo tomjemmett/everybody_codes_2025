@@ -1,6 +1,7 @@
 module Day02 where
 
 import Common
+import Control.Parallel.Strategies (parListChunk, rseq, using)
 import Data.Maybe (isJust)
 import ECSolution (Solution, getInput, makeSolution, runDay)
 import Text.Parsec qualified as P
@@ -30,67 +31,42 @@ part1 :: String -> String
 part1 input = show r
   where
     a = parseComplex input
-    r = iterate (cycleComplex a) (Complex 0 0) !! 3
-    cycleComplex :: Complex -> Complex -> Complex
-    cycleComplex a r0 = r3
-      where
-        r1 = multiplyComplex r0 r0
-        r2 = divideComplex r1 b
-        r3 = addComplex r2 a
-        b = Complex 10 10
+    Just r = iterate (cycleComplex a b) (Just $ Complex 0 0) !! 3
+    b = Complex 10 10
 
 part2 :: String -> Int
-part2 input = countTrue isJust as
-  where
-    a = parseComplex input
-    as =
-      [ fn $ addComplex a (Complex i j)
-        | i <- [0, 10 .. 1001],
-          j <- [0, 10 .. 1001]
-      ]
-    fn a' = iterate (cycleComplex a') (Just $ Complex 0 0) !! 100
-    cycleComplex :: Complex -> Maybe Complex -> Maybe Complex
-    cycleComplex _ Nothing = Nothing
-    cycleComplex a (Just r0) =
-      if inRange r3
-        then Just r3
-        else Nothing
-      where
-        r1 = multiplyComplex r0 r0
-        r2 = divideComplex r1 b
-        r3 = addComplex r2 a
-        b = Complex 100000 100000
-        inRange (Complex x y) = abs x <= 1000000 && abs y <= 1000000
+part2 = part2and3 [0, 10 .. 1001]
 
 part3 :: String -> Int
-part3 input = countTrue isJust as
+part3 = part2and3 [0 .. 1000]
+
+part2and3 :: [Int] -> String -> Int
+part2and3 xs input = countTrue isJust as
   where
     a = parseComplex input
     as =
       [ fn $ addComplex a (Complex i j)
-        | i <- [0 .. 1000],
-          j <- [0 .. 1000]
+        | i <- xs,
+          j <- xs
       ]
-    fn a' = iterate (cycleComplex a') (Just $ Complex 0 0) !! 100
-    cycleComplex :: Complex -> Maybe Complex -> Maybe Complex
-    cycleComplex _ Nothing = Nothing
-    cycleComplex a (Just r0) =
-      if inRange r3
-        then Just r3
-        else Nothing
-      where
-        r1 = multiplyComplex r0 r0
-        r2 = divideComplex r1 b
-        r3 = addComplex r2 a
-        b = Complex 100000 100000
-        inRange (Complex x y) = abs x <= 1000000 && abs y <= 1000000
+        `using` parListChunk 100 rseq
+    fn a' = iterate (cycleComplex a' b) (Just $ Complex 0 0) !! 100
+    b = Complex 100000 100000
 
 parseComplex :: String -> Complex
 parseComplex = parse do
-  name <- P.many1 P.letter
-  P.string "=["
-  x <- number
-  P.char ','
-  y <- number
-  P.char ']'
+  x <- P.many1 P.letter *> P.string "=[" *> number
+  y <- P.char ',' *> number <* P.char ']'
   pure (Complex x y)
+
+cycleComplex :: Complex -> Complex -> Maybe Complex -> Maybe Complex
+cycleComplex _ _ Nothing = Nothing
+cycleComplex a b (Just r0) =
+  if inRange r3
+    then Just r3
+    else Nothing
+  where
+    r1 = multiplyComplex r0 r0
+    r2 = divideComplex r1 b
+    r3 = addComplex r2 a
+    inRange (Complex x y) = abs x <= 1000000 && abs y <= 1000000
