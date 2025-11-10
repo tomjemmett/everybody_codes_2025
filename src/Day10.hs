@@ -1,5 +1,5 @@
 module Day10 where
-  
+
 import Common ()
 import ECSolution (Solution, getInput, makeSolution, runDay)
 
