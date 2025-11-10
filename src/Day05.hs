@@ -58,13 +58,13 @@ parseInput = map parseLine . lines
     parseLine = parse do
       id <- number <* P.char ':'
       xs <- P.sepBy number (P.try $ P.char ',')
-      pure (id, go [] xs)
-    go :: [Spine] -> [Int] -> [Spine]
-    go spines [] = spines
-    go spines (n : ns) = go (updateSpines spines) ns
+      pure (id, foldl (flip go) [] xs)
+    go :: Int -> [Spine] -> [Spine]
+    go n = updateSpines
       where
+        updateSpines :: [Spine] -> [Spine]
         updateSpines [] = [(Nothing, n, Nothing)]
         updateSpines (s@(l, x, r) : xs)
-          | x < n && isNothing l = (Just n, x, r) : xs
-          | x > n && isNothing r = (l, x, Just n) : xs
+          | x > n && isNothing l = (Just n, x, r) : xs
+          | x < n && isNothing r = (l, x, Just n) : xs
           | otherwise = s : updateSpines xs
