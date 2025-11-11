@@ -1,9 +1,25 @@
+{-# LANGUAGE TemplateHaskell #-}
+
 module Day06 where
 
 import Common
-import Data.ByteString (count)
+import Control.Lens (makeLenses, use, (+=), (^.))
+import Control.Monad.State.Strict
 import Data.List (inits)
 import ECSolution (Solution, getInput, makeSolution, runDay)
+
+data Counts = Counts
+  { _countA :: !Int,
+    _countB :: !Int,
+    _countC :: !Int,
+    _accum :: !Int
+  }
+  deriving (Show)
+
+makeLenses ''Counts
+
+makeCounts :: Int -> Int -> Int -> Counts
+makeCounts a b c = Counts {_countA = a, _countB = b, _countC = c, _accum = 0}
 
 day06 :: String -> IO (Int, Int, Int)
 day06 = getInput 6 part1 part2 part3
@@ -24,29 +40,42 @@ part2 = sum . map go . tail . inits
       _ -> 0
 
 part3 :: String -> Int
-part3 input = scan xs ys zs counts
+part3 input = solve ^. accum
   where
     dist = 1000
-    zs = concat $ replicate 1000 input
-    xs = replicate (dist + 1) '-' ++ zs
-    ys = drop dist zs ++ repeat '-'
-    counts = initCounts dist zs
-    scan :: String -> String -> String -> (Int, Int, Int) -> Int
-    scan _ _ [] _ = 0
-    scan (x : xs) (y : ys) (z : zs) (a, b, c) = res + scan xs ys zs (a', b', c')
-      where
-        a' = a - (if x == 'A' then 1 else 0) + (if y == 'A' then 1 else 0)
-        b' = b - (if x == 'B' then 1 else 0) + (if y == 'B' then 1 else 0)
-        c' = c - (if x == 'C' then 1 else 0) + (if y == 'C' then 1 else 0)
-        res = case z of
-          'a' -> a'
-          'b' -> b'
-          'c' -> c'
-          _ -> 0
-    initCounts :: Int -> String -> (Int, Int, Int)
-    initCounts dist xs = (a, b, c)
-      where
-        xs' = take dist xs
-        a = countTrue (== 'A') xs'
-        b = countTrue (== 'B') xs'
-        c = countTrue (== 'C') xs'
+    repeats = 1000
+    ---
+    xs = concat $ replicate repeats input
+    ls = replicate (dist + 1) '-' ++ xs
+    rs = drop dist xs ++ repeat '-'
+    ---
+    initCounts :: Counts
+    initCounts = flip execState (makeCounts 0 0 0) $
+      forM_ (take dist xs) $ \case
+        'A' -> countA += 1
+        'B' -> countB += 1
+        'C' -> countC += 1
+        _ -> return ()
+    ---
+    solve :: Counts
+    solve = flip execState initCounts $
+      forM_ (zip3 ls xs rs) $ \(l, x, r) -> do
+        -- character d distance to the left, which is being removed
+        updateCount (-1) l
+        -- character d distance to the right, which is being added
+        updateCount 1 r
+        -- add to the result based on the current character
+        count <- getCount x
+        accum += count
+    updateCount :: Int -> Char -> State Counts ()
+    updateCount n = \case
+      'A' -> countA += n
+      'B' -> countB += n
+      'C' -> countC += n
+      _ -> return ()
+    getCount :: Char -> State Counts Int
+    getCount = \case
+      'a' -> use countA
+      'b' -> use countB
+      'c' -> use countC
+      _ -> pure 0
