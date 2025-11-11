@@ -18,6 +18,7 @@ maintainer:         thomas.jemmett@nhs.net
 
 common shared-properties
     build-depends:
+        arithmoi,
         array,
         bifunctors,
         bytestring,
@@ -85,6 +86,7 @@ library
         Day18
         Day19
         Day20
+        Stories.S1.Quest01
     hs-source-dirs:   src
 
 executable ec2025
