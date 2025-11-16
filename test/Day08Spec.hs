@@ -10,4 +10,4 @@ spec = describe "Day 8" $ do
 
   it "Actual" $ do
     a <- day08 "actual"
-    a `shouldBe` (53, 2928640, 2800)
+    a `shouldBe` (53, 2928460, 2800)
