@@ -194,6 +194,9 @@ countReduce = foldr (flip (M.insertWith (+)) 1) M.empty
 (<&>) :: (a -> Bool) -> (a -> Bool) -> (a -> Bool)
 (<&>) = liftA2 (&&)
 
+(<||>) :: (a -> Bool) -> (a -> Bool) -> (a -> Bool)
+(<||>) = liftA2 (||)
+
 -- good example of DP memoization in Haskell
 --  source: https://jelv.is/blog/Lazy-Dynamic-Programming/
 wagnerFischer :: String -> String -> Int
