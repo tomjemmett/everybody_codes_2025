@@ -38,7 +38,7 @@ s1q2 :: String -> IO (String, String, String)
 s1q2 = getInput 102 part1 part2 part3
 
 part1 :: String -> String
-part1 = solve treeSwapP2
+part1 = solve treeSwapP1
 
 part2 :: String -> String
 part2 = solve treeSwapP2
@@ -123,6 +123,9 @@ treeAdd a@(_, x@(i, _)) (Node nodeId y@(j, _) l r)
   | i == j = Node nodeId x l r
   | i < j = Node nodeId y (treeAdd a l) r
   | i > j = Node nodeId y l (treeAdd a r)
+
+treeSwapP1 :: Int -> Tree -> Tree -> Tree
+treeSwapP1 _ t1 _ = t1
 
 treeSwapP2 :: Int -> Tree -> Tree -> Tree
 treeSwapP2 swapId t1 t2 = go t1
