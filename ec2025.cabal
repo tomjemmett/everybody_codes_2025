@@ -87,6 +87,7 @@ library
         Day19
         Day20
         Stories.S1.Quest01
+        Stories.S1.Quest02
     hs-source-dirs:   src
 
 executable ec2025
