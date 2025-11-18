@@ -3,7 +3,7 @@ module Day02 where
 import Common
 import Control.Parallel.Strategies (parListChunk, rseq, using)
 import Data.Maybe (isJust)
-import ECSolution (Solution, getInput, makeSolution, runDay)
+import ECSolution (getInput)
 import Text.Parsec qualified as P
 import Text.Parsec.String (Parser)
 

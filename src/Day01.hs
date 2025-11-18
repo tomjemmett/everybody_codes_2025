@@ -2,7 +2,7 @@ module Day01 where
 
 import Common
 import Data.List (splitAt)
-import ECSolution (Solution, getInput, makeSolution, runDay)
+import ECSolution (getInput)
 import Text.Parsec qualified as P
 import Text.Parsec.String (Parser)
 

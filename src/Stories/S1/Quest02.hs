@@ -9,7 +9,7 @@ import Control.Monad.Writer
 import Data.Function (on)
 import Data.HashMap.Strict qualified as M
 import Data.List (maximumBy)
-import ECSolution (Solution, getInput, makeSolution, runDay)
+import ECSolution (getInput)
 import Text.Parsec qualified as P
 
 data Trees = Trees

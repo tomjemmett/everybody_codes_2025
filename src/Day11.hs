@@ -2,7 +2,7 @@ module Day11 where
 
 import Common
 import Control.Arrow (Arrow (second), (>>>))
-import ECSolution (Solution, getInput, makeSolution, runDay)
+import ECSolution (getInput)
 
 day11 :: String -> IO (Int, Int, Int)
 day11 = getInput 11 part1 part2 part3

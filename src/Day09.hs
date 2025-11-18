@@ -7,7 +7,7 @@ import Data.HashMap.Strict qualified as M
 import Data.HashSet qualified as S
 import Data.List (maximumBy)
 import Data.Maybe (mapMaybe)
-import ECSolution (Solution, getInput, makeSolution, runDay)
+import ECSolution (getInput)
 import Text.Parsec qualified as P
 
 day09 :: String -> IO (Int, Int, Int)

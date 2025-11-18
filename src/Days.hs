@@ -23,6 +23,7 @@ module Days
   )
 where
 
+import Common
 import Control.Monad (when)
 import Day01 (day01)
 import Day02 (day02)
@@ -44,7 +45,7 @@ import Day17 (day17)
 import Day18 (day18)
 import Day19 (day19)
 import Day20 (day20)
-import ECSolution (Solution, makeSolution, showDay)
+import ECSolution (makeSolution, showDay)
 import System.Directory (doesFileExist)
 import System.TimeIt (timeIt)
 

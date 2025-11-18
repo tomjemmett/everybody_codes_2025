@@ -1,7 +1,7 @@
 module Day13 where
 
 import Common
-import ECSolution (Solution, getInput, makeSolution, runDay)
+import ECSolution (getInput)
 
 day13 :: String -> IO (Int, Int, Int)
 day13 = getInput 13 part1 part2 part3

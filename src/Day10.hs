@@ -9,7 +9,7 @@ import Data.HashMap.Strict qualified as M
 import Data.HashSet qualified as S
 import Data.List (find, inits, tails)
 import Data.Maybe (fromMaybe)
-import ECSolution (Solution, getInput, makeSolution, runDay)
+import ECSolution (getInput)
 
 type Dragon = S.HashSet Point2d
 

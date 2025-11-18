@@ -4,7 +4,7 @@ import Common
 import Data.Function (on)
 import Data.List (sortBy)
 import Data.Maybe (isNothing)
-import ECSolution (Solution, getInput, makeSolution, runDay)
+import ECSolution (getInput)
 import Text.Parsec qualified as P
 
 type Spine = (Maybe Int, Int, Maybe Int)

@@ -2,7 +2,7 @@ module Day03 where
 
 import Common
 import Data.List (group, nub, sort)
-import ECSolution (Solution, getInput, makeSolution, runDay)
+import ECSolution (getInput)
 
 day03 :: String -> IO (Int, Int, Int)
 day03 = getInput 3 part1 part2 part3

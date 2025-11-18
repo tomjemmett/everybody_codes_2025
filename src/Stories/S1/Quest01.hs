@@ -4,7 +4,7 @@ import Common
 import Control.Monad.State
 import Data.HashMap.Strict qualified as M
 import Data.List (splitAt)
-import ECSolution (Solution, getInput, makeSolution, runDay)
+import ECSolution (getInput)
 import Math.NumberTheory.Moduli.Class (modulo, powSomeMod)
 import Text.Parsec qualified as P
 

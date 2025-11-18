@@ -1,6 +1,6 @@
 {-# LANGUAGE InstanceSigs #-}
 
-module ECSolution (getInput, runDay, showDay, makeSolution, Solution) where
+module ECSolution (getInput, showDay, makeSolution, Solution) where
 
 import Text.Printf (printf)
 
@@ -47,14 +47,6 @@ getInput d f1 f2 f3 n = do
   i2 <- f2 <$> readFile (path 2)
   i3 <- f3 <$> readFile (path 3)
   pure (i1, i2, i3)
-
-runDay ::
-  (i1 -> a1) -> -- Part 1 function
-  (i2 -> a2) -> -- Part 2 function
-  (i3 -> a3) -> -- Part 3 function
-  (i1, i2, i3) -> -- parsed inputs
-  (a1, a2, a3)
-runDay f1 f2 f3 (i1, i2, i3) = (f1 i1, f2 i2, f3 i3)
 
 showDay :: Solution -> IO ()
 showDay (Solution (p1, p2, p3)) = do

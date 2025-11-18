@@ -1,7 +1,7 @@
 module Stories.S1.Quest03 where
 
 import Common
-import ECSolution (Solution, getInput, makeSolution, runDay)
+import ECSolution (getInput)
 import Text.Parsec qualified as P
 
 -- expectations:

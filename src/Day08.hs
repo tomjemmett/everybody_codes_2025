@@ -4,7 +4,7 @@ import Common
 import Data.HashMap.Strict qualified as M
 import Data.List (inits)
 import Data.Maybe (mapMaybe)
-import ECSolution (Solution, getInput, makeSolution, runDay)
+import ECSolution (getInput)
 
 type Point = (Double, Double)
 

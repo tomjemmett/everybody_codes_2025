@@ -7,7 +7,7 @@ import Data.Graph.Inductive (new)
 import Data.HashMap.Internal.Debug (valid)
 import Data.HashMap.Strict qualified as M
 import Data.HashSet qualified as S
-import ECSolution (Solution, getInput, makeSolution, runDay)
+import ECSolution (getInput)
 import Text.Parsec qualified as P
 
 type Rules = M.HashMap Char [Char]
