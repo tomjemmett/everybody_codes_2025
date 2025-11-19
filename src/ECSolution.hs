@@ -28,6 +28,10 @@ instance ToPartResult Int where
   toPartResult :: Int -> PartResult
   toPartResult = IntResult
 
+instance ToPartResult Integer where
+  toPartResult :: Integer -> PartResult
+  toPartResult = IntResult . fromIntegral
+
 makePartResult :: (ToPartResult a) => a -> PartResult
 makePartResult = toPartResult
 

@@ -20,6 +20,10 @@ module Days
     day19,
     day20,
     runDay,
+    s1q1,
+    s1q2,
+    s1q3,
+    s2q1,
   )
 where
 
@@ -46,6 +50,10 @@ import Day18 (day18)
 import Day19 (day19)
 import Day20 (day20)
 import ECSolution (createPath, makeSolution, showDay)
+import Stories.S1.Quest01
+import Stories.S1.Quest02
+import Stories.S1.Quest03
+import Stories.S2.Quest01
 import System.Directory (doesFileExist)
 import System.TimeIt (timeIt)
 
@@ -74,7 +82,12 @@ days =
 
 runDay :: Int -> IO ()
 runDay day = do
-  let d = days !! pred day
+  let d = case day of
+        101 -> fmap makeSolution . s1q1
+        102 -> fmap makeSolution . s1q2
+        103 -> fmap makeSolution . s1q3
+        201 -> fmap makeSolution . s2q1
+        _ -> days !! pred day
   contents <- readFile (createPath "sample" day 1)
 
   when (contents /= "") $ timeIt do
