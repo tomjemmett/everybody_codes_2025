@@ -1,6 +1,7 @@
 module Day12 where
 
 import Common
+import Control.Parallel.Strategies
 import Data.Char (digitToInt)
 import Data.Function (on)
 import Data.HashMap.Strict qualified as M
@@ -30,8 +31,14 @@ part3 input = M.size (head i) - M.size (i !! 3)
       foldl' (flip M.delete) i $
         S.toList $
           maximumBy (compare `on` S.size) $
-            map (explode i . (: [])) $
-              M.keys i
+            parMap rpar (explode i . (: [])) $
+              filter (isLocalMaximum i) $
+                M.keys i
+
+isLocalMaximum :: M.HashMap Point2d Int -> Point2d -> Bool
+isLocalMaximum i p = all ((<= v) . (\x -> M.lookupDefault 0 x i)) $ point2dNeighboursDiags p
+  where
+    v = i M.! p
 
 explode :: M.HashMap Point2d Int -> [Point2d] -> S.HashSet Point2d
 explode i init = go init S.empty
