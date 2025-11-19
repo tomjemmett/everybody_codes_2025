@@ -89,6 +89,7 @@ library
         Stories.S1.Quest01
         Stories.S1.Quest02
         Stories.S1.Quest03
+        Stories.S2.Quest01
     hs-source-dirs:   src
 
 executable ec2025
