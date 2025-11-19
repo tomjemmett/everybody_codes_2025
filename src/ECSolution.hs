@@ -1,6 +1,6 @@
 {-# LANGUAGE InstanceSigs #-}
 
-module ECSolution (getInput, showDay, makeSolution, Solution) where
+module ECSolution (getInput, showDay, makeSolution, Solution, createPath) where
 
 import Text.Printf (printf)
 

@@ -45,7 +45,7 @@ import Day17 (day17)
 import Day18 (day18)
 import Day19 (day19)
 import Day20 (day20)
-import ECSolution (makeSolution, showDay)
+import ECSolution (createPath, makeSolution, showDay)
 import System.Directory (doesFileExist)
 import System.TimeIt (timeIt)
 
@@ -75,7 +75,9 @@ days =
 runDay :: Int -> IO ()
 runDay day = do
   let d = days !! pred day
-  timeIt do
+  contents <- readFile (createPath "sample" day 1)
+
+  when (contents /= "") $ timeIt do
     putStrLn $ replicate 80 '-'
     putStrLn $ "Day: " ++ show day
     putStrLn ""
