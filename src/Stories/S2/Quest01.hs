@@ -12,7 +12,7 @@ s2q1_sample :: (Int, Int, String)
 s2q1_sample = (26, 115, "39 122")
 
 s2q1_actual :: (Int, Int, String)
-s2q1_actual = (50, 1130, "")
+s2q1_actual = (50, 1130, "25 110")
 
 s2q1 :: String -> IO (Int, Int, String)
 s2q1 = getInput 201 part1 part2 part3
@@ -33,8 +33,10 @@ part3 :: String -> String
 part3 input = show (minimum rs) ++ " " ++ show (maximum rs)
   where
     (b, moves) = parseInput input
-    xs = permutationsOfSize (length moves) [0, 2 .. fst (snd b)]
-    rs = map (sum . zipWith (toss b) moves) xs
+    starts = [0, 2 .. fst (snd b)]
+    possible_scores = map (\m -> map (toss b m) starts) moves
+    xs = permutationsOfSize (length moves) [0 .. pred $ length starts]
+    rs = map (sum . zipWith (!!) possible_scores) xs
 
 parseInput :: String -> ((M.HashMap Point2d Char, Point2d), [String])
 parseInput = parse do
