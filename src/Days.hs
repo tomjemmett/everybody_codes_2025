@@ -51,11 +51,11 @@ import Day18 (day18)
 import Day19 (day19)
 import Day20 (day20)
 import ECSolution (createPath, makeSolution, showDay)
-import Stories.S1.Quest01
-import Stories.S1.Quest02
-import Stories.S1.Quest03
-import Stories.S2.Quest01
-import Stories.S2.Quest02
+import Stories.S1.Quest01 (s1q1)
+import Stories.S1.Quest02 (s1q2)
+import Stories.S1.Quest03 (s1q3)
+import Stories.S2.Quest01 (s2q1)
+import Stories.S2.Quest02 (s2q2)
 import System.Directory (doesFileExist)
 import System.TimeIt (timeIt)
 
