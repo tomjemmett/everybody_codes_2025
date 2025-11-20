@@ -56,6 +56,7 @@ import Stories.S1.Quest02 (s1q2)
 import Stories.S1.Quest03 (s1q3)
 import Stories.S2.Quest01 (s2q1)
 import Stories.S2.Quest02 (s2q2)
+import Stories.S2.Quest03 (s2q3)
 import System.Directory (doesFileExist)
 import System.TimeIt (timeIt)
 
@@ -90,6 +91,7 @@ runDay day = do
         103 -> fmap makeSolution . s1q3
         201 -> fmap makeSolution . s2q1
         202 -> fmap makeSolution . s2q2
+        203 -> fmap makeSolution . s2q3
         _ -> days !! pred day
   contents <- readFile (createPath "sample" day 1)
 
