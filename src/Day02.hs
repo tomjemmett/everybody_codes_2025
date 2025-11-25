@@ -1,38 +1,35 @@
 module Day02 where
 
 import Common
-import Control.Parallel.Strategies (parListChunk, rseq, using)
+import Data.Complex
 import Data.Maybe (isJust)
 import ECSolution (getInput)
 import Text.Parsec qualified as P
-import Text.Parsec.String (Parser)
 
-data Complex = Complex Int Int
-
-instance Show Complex where
-  show (Complex x y) = "[" ++ show x ++ "," ++ show y ++ "]"
+asResult :: Complex Int -> String
+asResult (x :+ y) = "[" ++ show x ++ "," ++ show y ++ "]"
 
 day02 :: String -> IO (String, Int, Int)
 day02 = getInput 2 part1 part2 part3
 
-addComplex :: Complex -> Complex -> Complex
-addComplex (Complex x1 y1) (Complex x2 y2) = Complex (x1 + x2) (y1 + y2)
+addComplex :: Complex Int -> Complex Int -> Complex Int
+addComplex (x1 :+ y1) (x2 :+ y2) = (x1 + x2) :+ (y1 + y2)
 
-multiplyComplex :: Complex -> Complex -> Complex
-multiplyComplex (Complex x1 y1) (Complex x2 y2) = Complex (x1 * x2 - y1 * y2) (x1 * y2 + y1 * x2)
+multiplyComplex :: Complex Int -> Complex Int -> Complex Int
+multiplyComplex (x1 :+ y1) (x2 :+ y2) = (x1 * x2 - y1 * y2) :+ (x1 * y2 + y1 * x2)
 
-divideComplex :: Complex -> Complex -> Complex
-divideComplex (Complex x1 y1) (Complex x2 y2) = Complex x y
+divideComplex :: Complex Int -> Complex Int -> Complex Int
+divideComplex (x1 :+ y1) (x2 :+ y2) = x :+ y
   where
     x = if x1 > 0 then x1 `div` x2 else -((-x1) `div` x2)
     y = if y1 > 0 then y1 `div` y2 else -((-y1) `div` y2)
 
 part1 :: String -> String
-part1 input = show r
+part1 input = asResult r
   where
     a = parseComplex input
-    Just r = iterate (cycleComplex a b) (Just $ Complex 0 0) !! 3
-    b = Complex 10 10
+    Just r = iterate (cycleComplex a b) (Just $ 0 :+ 0) !! 3
+    b = 10 :+ 10
 
 part2 :: String -> Int
 part2 = part2and3 [0, 10 .. 1001]
@@ -45,21 +42,20 @@ part2and3 xs input = countTrue isJust as
   where
     a = parseComplex input
     as =
-      [ fn $ addComplex a (Complex i j)
+      [ fn $ addComplex a (i :+ j)
         | i <- xs,
           j <- xs
       ]
-        `using` parListChunk 100 rseq
-    fn a' = iterate (cycleComplex a' b) (Just $ Complex 0 0) !! 100
-    b = Complex 100000 100000
+    fn a' = iterate (cycleComplex a' b) (Just $ 0 :+ 0) !! 100
+    b = 100000 :+ 100000
 
-parseComplex :: String -> Complex
+parseComplex :: String -> Complex Int
 parseComplex = parse do
   x <- P.many1 P.letter *> P.string "=[" *> number
   y <- P.char ',' *> number <* P.char ']'
-  pure (Complex x y)
+  pure (x :+ y)
 
-cycleComplex :: Complex -> Complex -> Maybe Complex -> Maybe Complex
+cycleComplex :: Complex Int -> Complex Int -> Maybe (Complex Int) -> Maybe (Complex Int)
 cycleComplex _ _ Nothing = Nothing
 cycleComplex a b (Just r0) =
   if inRange r3
@@ -69,4 +65,4 @@ cycleComplex a b (Just r0) =
     r1 = multiplyComplex r0 r0
     r2 = divideComplex r1 b
     r3 = addComplex r2 a
-    inRange (Complex x y) = abs x <= 1000000 && abs y <= 1000000
+    inRange (x :+ y) = abs x <= 1000000 && abs y <= 1000000
