@@ -17,7 +17,4 @@ part2 :: String -> Int
 part2 = sum . take 20 . nub . parseInput
 
 part3 :: String -> Int
-part3 = go . parseInput
-  where
-    go [] = 0
-    go xs = 1 + go (concatMap tail $ group xs)
+part3 = maximum . map length . group . parseInput
