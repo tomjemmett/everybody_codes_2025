@@ -7,5 +7,5 @@ main :: IO ()
 main = do
   args <- getArgs
   if null args
-    then mapM_ runDay $ [1 .. 20] ++ [101, 102, 103, 201, 202]
+    then mapM_ runDay $ [1 .. 20] ++ [101, 102, 103, 201, 202, 203]
     else runDay (read $ head args)
