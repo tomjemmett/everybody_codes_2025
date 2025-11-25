@@ -7,13 +7,6 @@ import ECSolution (getInput)
 import Text.Parsec qualified as P
 import Text.Parsec.String (Parser)
 
--- expectations:
-s2q1_sample :: (Int, Int, String)
-s2q1_sample = (26, 115, "39 122")
-
-s2q1_actual :: (Int, Int, String)
-s2q1_actual = (50, 1130, "25 110")
-
 s2q1 :: String -> IO (Int, Int, String)
 s2q1 = getInput 201 part1 part2 part3
 

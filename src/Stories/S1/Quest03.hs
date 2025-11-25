@@ -4,13 +4,6 @@ import Common
 import ECSolution (getInput)
 import Text.Parsec qualified as P
 
--- expectations:
-s1q3_sample :: (Integer, Integer, Integer)
-s1q3_sample = (1310, 13659, 13659)
-
-s1q3_actual :: (Integer, Integer, Integer)
-s1q3_actual = (3444, 1029790, 90312279547)
-
 s1q3 :: String -> IO (Integer, Integer, Integer)
 s1q3 = getInput 103 part1 part2 part3
 

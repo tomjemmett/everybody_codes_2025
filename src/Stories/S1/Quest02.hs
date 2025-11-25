@@ -28,13 +28,6 @@ type SwapFn = Int -> Trees -> Trees
 
 makeLenses ''Trees
 
--- expectations:
-s1q2_sample :: (String, String, String)
-s1q2_sample = ("CFGNLK", "MGFLNK", "DJCGL")
-
-s1q2_actual :: (String, String, String)
-s1q2_actual = ("QUACK!HLFFJZHF", "QUACK!VPNGTBYBWMFTNL", "QUACK!PMVJPJGJNXHBSNZYXTMZJGZLNJVG")
-
 s1q2 :: String -> IO (String, String, String)
 s1q2 = getInput 102 part1 part2 part3
 

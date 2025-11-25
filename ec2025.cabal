@@ -126,6 +126,12 @@ test-suite spec
         Day18Spec
         Day19Spec
         Day20Spec
+        Stories.S1.Quest01Spec
+        Stories.S1.Quest02Spec
+        Stories.S1.Quest03Spec
+        Stories.S2.Quest01Spec
+        Stories.S2.Quest02Spec
+        Stories.S2.Quest03Spec
         SpecHelper
     hs-source-dirs:   test
     main-is:          Spec.hs

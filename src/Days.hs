@@ -25,6 +25,7 @@ module Days
     s1q3,
     s2q1,
     s2q2,
+    s2q3,
   )
 where
 

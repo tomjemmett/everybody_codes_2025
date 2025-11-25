@@ -51,13 +51,6 @@ roll Die {..} = (v, die')
     v = _faces V.! i'
     die' = Die _seed _faces i' p'' r'
 
--- expectations:
-s2q3_sample :: (Int, String, Int)
-s2q3_sample = (844, "1,3,4,2", 1125)
-
-s2q3_actual :: (Int, String, Int)
-s2q3_actual = (622, "9,2,8,6,3,7,5,4,1", 154248)
-
 s2q3 :: String -> IO (Int, String, Int)
 s2q3 = getInput 203 part1 part2 part3
 

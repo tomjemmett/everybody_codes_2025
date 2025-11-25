@@ -8,13 +8,6 @@ import ECSolution (getInput)
 import Math.NumberTheory.Moduli.Class (modulo, powSomeMod)
 import Text.Parsec qualified as P
 
--- expectations:
-s1q1_sample :: (Int, Int, Int)
-s1q1_sample = (11611972920, 1507702060886, 3279640)
-
-s1q1_actual :: (Int, Int, Int)
-s1q1_actual = (1000171842, 163614275874495, 567008267427112)
-
 s1q1 :: String -> IO (Int, Int, Int)
 s1q1 = getInput 101 part1 part2 part3
 
