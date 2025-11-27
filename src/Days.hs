@@ -26,6 +26,7 @@ module Days
     s2q1,
     s2q2,
     s2q3,
+    downloadNotes,
   )
 where
 
@@ -52,6 +53,7 @@ import Day18 (day18)
 import Day19 (day19)
 import Day20 (day20)
 import ECSolution (createPath, makeSolution, showDay)
+import GetInputs (downloadNotes, submitAnswer)
 import Stories.S1.Quest01 (s1q1)
 import Stories.S1.Quest02 (s1q2)
 import Stories.S1.Quest03 (s1q3)

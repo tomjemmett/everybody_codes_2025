@@ -18,27 +18,37 @@ maintainer:         thomas.jemmett@nhs.net
 
 common shared-properties
     build-depends:
+        aeson,
         arithmoi,
         array,
+        base16-bytestring,
+        base64-bytestring,
         bifunctors,
         bytestring,
         containers,
+        cryptonite,
         directory,
+        dotenv,
         fgl,
         hashable,
+        http-client,
         lens,
+        lens-aeson,
         mtl,
         parallel,
         parsec,
         pointedlist,
         primes,
         pqueue,
+        wreq,
         search-algorithms,
         split,
+        text,
         time,
         timeit,
         transformers,
         unordered-containers,
+        uri,
         utf8-string,
         vector,
         base ^>=4.17.2
@@ -65,6 +75,7 @@ library
         Days
         Common
         ECSolution
+        GetInputs
     other-modules:
         Day01
         Day02
