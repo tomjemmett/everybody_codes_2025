@@ -32,6 +32,8 @@ where
 
 import Common
 import Control.Monad (when)
+import Data.Bifunctor (bimap)
+import Data.Char (toUpper)
 import Day01 (day01)
 import Day02 (day02)
 import Day03 (day03)
@@ -52,7 +54,7 @@ import Day17 (day17)
 import Day18 (day18)
 import Day19 (day19)
 import Day20 (day20)
-import ECSolution (createPath, makeSolution, showDay)
+import ECSolution
 import GetInputs (downloadNotes, submitAnswer)
 import Stories.S1.Quest01 (s1q1)
 import Stories.S1.Quest02 (s1q2)
@@ -62,6 +64,7 @@ import Stories.S2.Quest02 (s2q2)
 import Stories.S2.Quest03 (s2q3)
 import System.Directory (doesFileExist)
 import System.TimeIt (timeIt)
+import Text.Printf (printf)
 
 days =
   [ fmap makeSolution . day01,
@@ -108,3 +111,28 @@ runDay day = do
     putStrLn "Actual:"
     d "actual" >>= showDay
     putStrLn ""
+
+tryAnswer :: Int -> Int -> IO ()
+tryAnswer quest part = do
+  Solution (s1, s2, s3) <- (days !! pred quest) "sample"
+  Solution (a1, a2, a3) <- (days !! pred quest) "actual"
+  let (sampleAnswer, actualAnswer) = bimap show show case part of
+        1 -> (s1, a1)
+        2 -> (s2, a2)
+        3 -> (s3, a3)
+  putStrLn $ printf "Sample answer for quest %d part %d: %s" quest part sampleAnswer
+  putStrLn $ printf "Actual answer for quest %d part %d: %s" quest part actualAnswer
+  putStr "Submit? "
+  response <- getYNResonse
+  when response do
+    submitAnswer quest part actualAnswer
+    when (part < 3) $ downloadNotes quest
+
+getYNResonse :: IO Bool
+getYNResonse = do
+  putStr "Please answer y or n: "
+  response <- getLine
+  case map toUpper response of
+    "Y" -> pure True
+    "N" -> pure False
+    _ -> getYNResonse
