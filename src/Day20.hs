@@ -2,83 +2,74 @@ module Day20 where
 
 import Algorithm.Search
 import Common
-import Data.Function (on)
+import Data.Bifunctor (first)
 import Data.HashMap.Strict qualified as M
-import Data.List (maximumBy)
+import Data.HashSet qualified as S
+import Data.List (find)
+import Data.Maybe (fromJust)
 import ECSolution (getInput)
 
 day20 :: String -> IO (Int, Int, Int)
 day20 = getInput 20 part1 part2 part3
 
 part1 :: String -> Int
-part1 input = length $ concatMap (canReach i) $ M.keys $ M.filter (== 'T') i
+part1 input = flip div 2 $ length $ concatMap neighbors $ S.toList ts
   where
-    i = parseInput input
-    canReach :: M.HashMap Point2d Char -> Point2d -> [Point2d]
-    canReach m (x, y) = filter isValid neighbors
-      where
-        neighbors :: [Point2d]
-        neighbors
-          | even x && even y = [(x + 1, y)]
-          | even x || even y = [(x + 1, y), (x, y + 1)]
-          | otherwise = [(x + 1, y)]
-        isValid p = case M.lookup p m of
-          Just 'T' -> True
-          _ -> False
+    (adjacents, _, _, ts) = parseInput input
+    neighbors :: Point3d -> [Point3d]
+    neighbors = filter (`S.member` ts) . init . adjacents
 
 part2 :: String -> Int
-part2 = solve [id]
+part2 = fromJust . findPath 1 id
 
 part3 :: String -> Int
-part3 = solve [id, rotateBy120, rotateBy120 . rotateBy120]
+part3 = fromJust . findPath 3 rotate120
   where
-    rotateBy120 :: M.HashMap Point2d Char -> M.HashMap Point2d Char
-    rotateBy120 m = M.fromList $ goRow (0, 0) bottom
-      where
-        ks = M.keys m
-        bottom = maximumBy (compare `on` snd) ks
-        maxX = maximum $ map fst ks
-        goRow (nx, ny) (sx, sy)
-          | sx == maxX = [((nx, ny), m M.! (sx, sy))]
-          | otherwise = go nx (sx, sy) ++ goRow (nx + 1, ny + 1) (sx + 1, sy - 1)
-          where
-            go :: Int -> Point2d -> [(Point2d, Char)]
-            go i (x, 0) = [((i, ny), m M.! (x, 0))]
-            go i (x, y) =
-              ((i, ny), m M.! (x, y))
-                : ((i + 1, ny), m M.! (x, y - 1))
-                : go (i + 2) (x - 1, y - 1)
+    rotate120 :: Point3d -> Point3d
+    rotate120 (a, b, c) = (b, c, a)
 
-solve :: [M.HashMap Point2d Char -> M.HashMap (Int, Int) Char] -> String -> Int
-solve transformations input = case dijkstra neighbors cost goal (start, 0) of
-  Just r -> fst r
-  Nothing -> error "No path found"
+findPath :: Int -> (Point3d -> Point3d) -> String -> Maybe Int
+findPath rotations rotate input = fst <$> dijkstra neighbors cost goal (start, 0)
   where
-    i = parseInput input
-    start = head $ M.keys $ M.filter (== 'S') i
-    is = transformations <*> [i]
-    cost _ _ = 1
-    goal (p, _) = i M.! p == 'E'
-    neighbors ((x, y), n) =
-      map (,n')
-        . filter ((/= '#') . flip (M.lookupDefault '#') i')
-        $ xss : [(x + 1, y), (x - 1, y), (x, y)]
+    (adjacents, start, end, ts) = parseInput input
+    neighbors :: (Point3d, Int) -> [(Point3d, Int)]
+    neighbors (p, n) = map (,n') xs
       where
-        xss
-          | even x && even y = (x, y - 1)
-          | even x = (x, y + 1)
-          | even y = (x, y + 1)
-          | otherwise = (x, y - 1)
-        n' = (n + 1) `mod` length transformations
-        i' = is !! n'
+        xs = filter (`S.member` ts) $ map rotate $ adjacents p
+        n' = succ n `mod` rotations
+    cost :: (Point3d, Int) -> (Point3d, Int) -> Int
+    cost = const . const 1
+    goal :: (Point3d, Int) -> Bool
+    goal = (== end) . fst
 
-parseInput :: String -> M.HashMap Point2d Char
-parseInput input =
-  M.fromList $
-    concat
-      [ [ ((x, y), v)
-          | (x, v) <- zip [0 ..] ln,
-            v /= '.'
+parseInput :: String -> (Point3d -> [Point3d], Point3d, Point3d, S.HashSet Point3d)
+parseInput input = (adjacents, start, end, S.fromList $ map fst ts)
+  where
+    ts = map (first (getCoord size)) $ filter ((`elem` "EST") . snd) xs
+    xs =
+      concat
+        [ [ ((x, y), v)
+            | (x, v) <- zip [0 ..] ln
+          ]
+          | (y, ln) <- zip [0 ..] $ lines input
         ]
-        | (y, ln) <- zip [0 ..] $ lines input
-      ]
+    size = maximum $ map (snd . fst) xs
+    Just (start, _) = find ((== 'S') . snd) ts
+    Just (end, _) = find ((== 'E') . snd) ts
+    adjacents :: Point3d -> [Point3d]
+    adjacents (a, b, c) =
+      if even (a + b + c + size + 1)
+        then [(a + 1, b, c), (a, b + 1, c), (a, b, c + 1), (a, b, c)]
+        else [(a, b - 1, c), (a - 1, b, c), (a, b, c - 1), (a, b, c)]
+
+-- create a transformed coordinate system:
+-- from each corner, start labelling diagonally starting from n decreasing to 0
+-- this gives us points like (8, 0, 0), then (8, 0, 1), (8, 0, 0), (8, 1, 0) etc.
+-- these points are unique, but crucially allow us to easily
+--   a. find adjacent points
+--   b. rotate points around the triangle center
+getCoord :: Int -> Point2d -> Point3d
+getCoord n (x, y) = (n - x', y' `div` 2, y)
+  where
+    x' = (x + y + 1) `div` 2
+    y' = x - y
