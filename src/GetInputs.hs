@@ -57,17 +57,17 @@ getOpts :: IO Options
 getOpts = do
   loadFile defaultConfig
   cookie <- B.pack <$> getEnv "EC_COOKIE"
-  pure $ defaults & header "Cookie" .~ [cookie]
+  pure $ defaults & header "Cookie" .~ ["everybody-codes=" <> cookie]
 
 getSeed :: IO (Maybe Integer)
 getSeed = do
   opts <- getOpts
-  res <- getWith opts "https://everybody.codes/api/user/me"
+  res <- getWith opts "https://api.everybody.codes/user/me"
   pure $ res ^? responseBody . key "seed" . _Integer
 
 getAESKeys :: Int -> Int -> IO [Maybe Text]
 getAESKeys event quest = do
-  let uri = printf "https://everybody.codes/api/event/%d/quest/%d" event quest
+  let uri = printf "https://api.everybody.codes/event/%d/quest/%d" event quest
   opts <- getOpts
   res <- getWith opts uri
   pure $ map (\k -> res ^? responseBody . key k . _String) ["key1", "key2", "key3"]
