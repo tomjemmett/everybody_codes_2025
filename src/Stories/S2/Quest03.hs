@@ -4,7 +4,7 @@ module Stories.S2.Quest03 where
 
 import Common
 import Control.Lens (makeLenses, (&), (.~), (^.))
-import Control.Monad (guard)
+import Control.Monad (guard, forM)
 import Control.Monad.RWS
 import Control.Parallel.Strategies
 import Data.Char (digitToInt)

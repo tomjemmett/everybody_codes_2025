@@ -7,6 +7,7 @@ import Control.Lens (makeLenses, use, (+=), (^.))
 import Control.Monad.State.Strict
 import Data.List (inits)
 import ECSolution (getInput)
+import Control.Monad (forM_)
 
 data Counts = Counts
   { _countA :: !Int,

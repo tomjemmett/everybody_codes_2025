@@ -1,7 +1,7 @@
 module Day10 where
 
 import Common
-import Control.Monad (guard, replicateM)
+import Control.Monad (guard, replicateM, forM)
 import Control.Monad.RWS
 import Control.Monad.State
 import Data.Bifunctor (first, second)

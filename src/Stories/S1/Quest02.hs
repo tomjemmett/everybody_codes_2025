@@ -6,6 +6,7 @@ import Common
 import Control.Applicative (liftA2)
 import Control.Lens
 import Control.Monad.Writer
+import Control.Monad (forM_)
 import Data.Function (on)
 import Data.HashMap.Strict qualified as M
 import Data.List (maximumBy)
