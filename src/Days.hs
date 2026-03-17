@@ -26,6 +26,7 @@ module Days
     s2q1,
     s2q2,
     s2q3,
+    s3q1,
     downloadNotes,
   )
 where
@@ -62,6 +63,7 @@ import Stories.S1.Quest03 (s1q3)
 import Stories.S2.Quest01 (s2q1)
 import Stories.S2.Quest02 (s2q2)
 import Stories.S2.Quest03 (s2q3)
+import Stories.S3.Quest01 (s3q1)
 import System.Directory (doesFileExist)
 import System.TimeIt (timeIt)
 import Text.Printf (printf)
@@ -98,6 +100,7 @@ runDay day = do
         201 -> fmap makeSolution . s2q1
         202 -> fmap makeSolution . s2q2
         203 -> fmap makeSolution . s2q3
+        301 -> fmap makeSolution . s3q1
         _ -> days !! pred day
   contents <- readFile (createPath "sample" day 1)
 
