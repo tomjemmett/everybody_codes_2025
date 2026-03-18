@@ -7,8 +7,8 @@ import ECSolution (getInput)
 import Text.Parsec qualified as P
 import Text.Parsec.String (Parser)
 
-s2q1 :: String -> IO (Int, Int, String)
-s2q1 = getInput 201 part1 part2 part3
+quest01 :: String -> IO (Int, Int, String)
+quest01 = getInput 2 1 part1 part2 part3
 
 part1 :: String -> Int
 part1 input = sum r

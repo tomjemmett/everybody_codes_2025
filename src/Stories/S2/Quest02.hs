@@ -8,8 +8,8 @@ import ECSolution (getInput)
 import Text.Parsec qualified as P
 import Text.Parsec.String (Parser)
 
-s2q2 :: String -> IO (Int, Int, Int)
-s2q2 = getInput 202 part1 part2 part3
+quest02 :: String -> IO (Int, Int, Int)
+quest02 = getInput 2 2 part1 part2 part3
 
 part1 :: String -> Int
 part1 = go (cycle "RGB")

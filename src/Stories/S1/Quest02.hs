@@ -5,8 +5,8 @@ module Stories.S1.Quest02 where
 import Common
 import Control.Applicative (liftA2)
 import Control.Lens
-import Control.Monad.Writer
 import Control.Monad (forM_)
+import Control.Monad.Writer
 import Data.Function (on)
 import Data.HashMap.Strict qualified as M
 import Data.List (maximumBy)
@@ -29,8 +29,8 @@ type SwapFn = Int -> Trees -> Trees
 
 makeLenses ''Trees
 
-s1q2 :: String -> IO (String, String, String)
-s1q2 = getInput 102 part1 part2 part3
+quest02 :: String -> IO (String, String, String)
+quest02 = getInput 1 2 part1 part2 part3
 
 part1 :: String -> String
 part1 = solve (const id)

@@ -1,10 +1,19 @@
 cradle:
   cabal:
     - path: "src"
-      component: "lib:ec2025"
+      component: "lib:everybody-codes"
 
-    - path: "app/Main.hs"
-      component: "ec2025:exe:ec2025"
+    - path: "app/Story1.hs"
+      component: "everybody-codes:exe:story1"
+
+    - path: "app/Story2.hs"
+      component: "everybody-codes:exe:story2"
+
+    - path: "app/Story3.hs"
+      component: "everybody-codes:exe:story3"
+
+    - path: "app/Y2025.hs"
+      component: "everybody-codes:exe:ec2025"
 
     - path: "test"
-      component: "ec2025:test:spec"
+      component: "everybody-codes:test:spec"

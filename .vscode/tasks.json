@@ -18,13 +18,13 @@
     },
     {
       "group": "build",
-      "label": "haskell run day",
+      "label": "haskell run quest",
       "type": "shell",
-      "command": "cabal run ec2025 ${input:day} -- +RTS -N20"
+      "command": "cabal run ec2025 ${input:quest} -- +RTS -N20"
     },
     {
       "group": "build",
-      "label": "haskell run all days",
+      "label": "haskell run all quests",
       "type": "shell",
       "command": "cabal run ec2025 -- +RTS -N20"
     },
@@ -52,8 +52,8 @@
   ],
   "inputs": [
     {
-      "id": "day",
-      "description": "Day to run",
+      "id": "quest",
+      "description": "Quest to run",
       "type": "promptString"
     }
   ]

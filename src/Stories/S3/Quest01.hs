@@ -15,8 +15,8 @@ data Scale = Scale
   }
   deriving (Show)
 
-s3q1 :: String -> IO (Int, Int, Int)
-s3q1 = getInput 301 part1 part2 part3
+quest01 :: String -> IO (Int, Int, Int)
+quest01 = getInput 3 1 part1 part2 part3
 
 part1 :: String -> Int
 part1 = sum . map scaleId . filter greenIsDominant . parseInput

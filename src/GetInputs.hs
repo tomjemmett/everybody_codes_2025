@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module GetInputs (downloadNotes, submitAnswer) where
+module GetInputs where -- (downloadNotes, submitAnswer) where
 
 import Configuration.Dotenv (defaultConfig, loadFile)
 import Control.Applicative (liftA2)
@@ -34,11 +34,8 @@ import Network.Wreq
 import System.Environment (getEnv)
 import Text.Printf (printf)
 
-event :: Int
-event = 2025
-
-downloadNotes :: Int -> IO ()
-downloadNotes quest = do
+downloadNotes :: Int -> Int -> IO ()
+downloadNotes event quest = do
   Just seed <- getSeed
   keys <- getAESKeys event quest
   notes <- getNotes event quest (fromIntegral seed)
@@ -47,7 +44,7 @@ downloadNotes quest = do
 
   putStrLn $ "Downloading inputs for " ++ show event ++ " quest " ++ show quest
   forM_ (zip [1 ..] kn) $ \(part, note) -> do
-    let filename = createPath "actual" quest part
+    let filename = createPath "actual" event quest part
     writeFile filename (T.unpack note)
     putStrLn $ " * Downloaded part " ++ show part
 
@@ -93,8 +90,8 @@ decryptNote (Just (k, n)) = case unpad (PKCS7 16) padded of
     cipher = throwCryptoError $ cipherInit kb
     padded = cbcDecrypt cipher iv nb
 
-submitAnswer :: Int -> Int -> String -> IO ()
-submitAnswer quest part result = do
+submitAnswer :: Int -> Int -> Int -> String -> IO ()
+submitAnswer event quest part result = do
   let uri = printf "https://everybody.codes/api/event/%d/quest/%d/part/%d/answer" event quest part
   opts <- getOpts
   res <- try $ postWith opts uri (object ["answer" .= result])

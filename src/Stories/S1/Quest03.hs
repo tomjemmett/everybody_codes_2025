@@ -4,8 +4,8 @@ import Common
 import ECSolution (getInput)
 import Text.Parsec qualified as P
 
-s1q3 :: String -> IO (Integer, Integer, Integer)
-s1q3 = getInput 103 part1 part2 part3
+quest03 :: String -> IO (Integer, Integer, Integer)
+quest03 = getInput 1 3 part1 part2 part3
 
 part1 :: String -> Integer
 part1 input = sum r

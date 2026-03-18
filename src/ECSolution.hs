@@ -1,6 +1,6 @@
 {-# LANGUAGE InstanceSigs #-}
 
-module ECSolution (getInput, showDay, makeSolution, Solution (..), createPath) where
+module ECSolution (getInput, showQuest, makeSolution, Solution (..), createPath) where
 
 import Text.Printf (printf)
 
@@ -35,25 +35,26 @@ instance ToPartResult Integer where
 makePartResult :: (ToPartResult a) => a -> PartResult
 makePartResult = toPartResult
 
-createPath :: String -> Int -> Int -> String
-createPath = printf "inputs/%s/%02d/%d.txt"
+createPath :: String -> Int -> Int -> Int -> String
+createPath = printf "inputs/%s/%d/%02d/%d.txt"
 
 getInput ::
-  Int -> -- Day
+  Int -> -- Event
+  Int -> -- Quest
   (String -> i1) -> -- Part 1 parsing function
   (String -> i2) -> -- Part 2 parsing function
   (String -> i3) -> -- Part 3 parsing function
   String -> -- actual/sample
   IO (i1, i2, i3)
-getInput d f1 f2 f3 n = do
-  let path = createPath n d
+getInput e q f1 f2 f3 n = do
+  let path = createPath n e q
   i1 <- f1 <$> readFile (path 1)
   i2 <- f2 <$> readFile (path 2)
   i3 <- f3 <$> readFile (path 3)
   pure (i1, i2, i3)
 
-showDay :: Solution -> IO ()
-showDay (Solution (p1, p2, p3)) = do
+showQuest :: Solution -> IO ()
+showQuest (Solution (p1, p2, p3)) = do
   print p1
   print p2
   print p3

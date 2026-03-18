@@ -1,0 +1,186 @@
+cabal-version:      3.6
+name:               everybody-codes
+version:            0.0.1
+
+-- A short (one-line) description of the package.
+-- synopsis:
+
+-- A longer description of the package.
+-- description:
+
+-- A URL where users can report bugs.
+-- bug-reports:
+
+-- The license under which the package is released.
+-- license:
+author:             Tom Jemmett
+maintainer:         thomas.jemmett@nhs.net
+
+common shared-properties
+    build-depends:
+        aeson,
+        arithmoi,
+        array,
+        base16-bytestring,
+        base64-bytestring,
+        bifunctors,
+        bytestring,
+        containers,
+        crypton, 
+        directory,
+        dotenv,
+        fgl,
+        hashable,
+        http-client,
+        lens,
+        lens-aeson,
+        mtl,
+        parallel,
+        parsec,
+        pointedlist,
+        primes,
+        pqueue,
+        search-algorithms,
+        split,
+        text,
+        time,
+        timeit,
+        transformers,
+        unordered-containers,
+        uri,
+        utf8-string,
+        vector,
+        wreq,
+        base ^>=4.18
+    default-extensions:
+        BangPatterns
+        BlockArguments
+        DataKinds
+        FlexibleContexts
+        FlexibleInstances
+        ImportQualifiedPost
+        LambdaCase
+        MonadComprehensions
+        MultiWayIf
+        RecordWildCards
+        TupleSections
+        TypeApplications
+        TypeOperators
+        ViewPatterns
+    default-language: Haskell2010
+
+library
+    import:           shared-properties
+    exposed-modules:
+        Events.Y2025.Quests
+        Stories.S1.Quests
+        Stories.S2.Quests
+        Stories.S3.Quests
+        Common
+        ECSolution
+        GetInputs
+    other-modules:
+        Events.Y2025.Quest01
+        Events.Y2025.Quest02
+        Events.Y2025.Quest03
+        Events.Y2025.Quest04
+        Events.Y2025.Quest05
+        Events.Y2025.Quest06
+        Events.Y2025.Quest07
+        Events.Y2025.Quest08
+        Events.Y2025.Quest09
+        Events.Y2025.Quest10
+        Events.Y2025.Quest11
+        Events.Y2025.Quest12
+        Events.Y2025.Quest13
+        Events.Y2025.Quest14
+        Events.Y2025.Quest15
+        Events.Y2025.Quest16
+        Events.Y2025.Quest17
+        Events.Y2025.Quest18
+        Events.Y2025.Quest19
+        Events.Y2025.Quest20
+        Stories.S1.Quest01
+        Stories.S1.Quest02
+        Stories.S1.Quest03
+        Stories.S2.Quest01
+        Stories.S2.Quest02
+        Stories.S2.Quest03
+        Stories.S3.Quest01
+        Stories.S3.Quest02
+        Stories.S3.Quest03
+    hs-source-dirs:   src
+    hs-source-dirs:   src
+
+executable ec2025
+    import:           shared-properties
+    main-is:          Y2025.hs
+    build-depends:
+        everybody-codes
+    hs-source-dirs:   app
+    ghc-options: -threaded -rtsopts -O2
+
+executable story1
+    import:           shared-properties
+    main-is:          Story1.hs
+    build-depends:
+        everybody-codes
+    hs-source-dirs:   app
+    ghc-options: -threaded -rtsopts -O2
+
+executable story2
+    import:           shared-properties
+    main-is:          Story2.hs
+    build-depends:
+        everybody-codes
+    hs-source-dirs:   app
+    ghc-options: -threaded -rtsopts -O2
+
+executable story3
+    import:           shared-properties
+    main-is:          Story3.hs
+    build-depends:
+        everybody-codes
+    hs-source-dirs:   app
+    ghc-options: -threaded -rtsopts -O2
+
+test-suite spec
+    import:           shared-properties
+    type:             exitcode-stdio-1.0
+    other-modules:
+        Events.Y2025.Quest01Spec
+        Events.Y2025.Quest02Spec
+        Events.Y2025.Quest03Spec
+        Events.Y2025.Quest04Spec
+        Events.Y2025.Quest05Spec
+        Events.Y2025.Quest06Spec
+        Events.Y2025.Quest07Spec
+        Events.Y2025.Quest08Spec
+        Events.Y2025.Quest09Spec
+        Events.Y2025.Quest10Spec
+        Events.Y2025.Quest11Spec
+        Events.Y2025.Quest12Spec
+        Events.Y2025.Quest13Spec
+        Events.Y2025.Quest14Spec
+        Events.Y2025.Quest15Spec
+        Events.Y2025.Quest16Spec
+        Events.Y2025.Quest17Spec
+        Events.Y2025.Quest18Spec
+        Events.Y2025.Quest19Spec
+        Events.Y2025.Quest20Spec
+        Stories.S1.Quest01Spec
+        Stories.S1.Quest02Spec
+        Stories.S1.Quest03Spec
+        Stories.S2.Quest01Spec
+        Stories.S2.Quest02Spec
+        Stories.S2.Quest03Spec
+        Stories.S3.Quest01Spec
+        Stories.S3.Quest02Spec
+        Stories.S3.Quest03Spec
+        SpecHelper
+    hs-source-dirs:   test
+    main-is:          Spec.hs
+    build-depends:
+        hspec >= 2.7,
+        hspec-discover >= 2.7,
+        everybody-codes >= 0.0.1

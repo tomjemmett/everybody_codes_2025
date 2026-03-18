@@ -4,7 +4,7 @@ module Stories.S2.Quest03 where
 
 import Common
 import Control.Lens (makeLenses, (&), (.~), (^.))
-import Control.Monad (guard, forM)
+import Control.Monad (forM, guard)
 import Control.Monad.RWS
 import Control.Parallel.Strategies
 import Data.Char (digitToInt)
@@ -51,8 +51,8 @@ roll Die {..} = (v, die')
     v = _faces V.! i'
     die' = Die _seed _faces i' p'' r'
 
-s2q3 :: String -> IO (Int, String, Int)
-s2q3 = getInput 203 part1 part2 part3
+quest03 :: String -> IO (Int, String, Int)
+quest03 = getInput 2 3 part1 part2 part3
 
 part1 :: String -> Int
 part1 input = pred $ go (0, dice)
