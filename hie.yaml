@@ -12,6 +12,9 @@ cradle:
     - path: "app/Story3.hs"
       component: "everybody-codes:exe:story3"
 
+    - path: "app/Y2024.hs"
+      component: "everybody-codes:exe:ec2024"
+
     - path: "app/Y2025.hs"
       component: "everybody-codes:exe:ec2025"
 
